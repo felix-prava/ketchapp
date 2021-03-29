@@ -19,4 +19,4 @@ Tehnologii: Javascript, NodeJS, MongoDB
 
 Interfata: https://xd.adobe.com/view/b8124ef2-0087-45e0-beea-3a1095b807f5-ed41/?fbclid=IwAR3GBjpV_FomuUYpbXa2utO-RARxmEGRcWNYufhM8qnI6gLB-g8EKU9Zxto
 
-https://github.com/felix24mihai/ketchapp/issues/1#issue-843825066
+![Postman-API-testing](https://user-images.githubusercontent.com/62405899/112902103-55247180-90ee-11eb-8081-d461e694865c.jpeg)
