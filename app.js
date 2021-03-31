@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -25,9 +24,11 @@ mongoose.connect(
 
 //Import routes
 const usersRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 //Route Middlewares
 app.use('/api/users', usersRoute);
+app.use('/api/user', authRoute);
 
 //Home route
 app.get('/', (req, res) => {
