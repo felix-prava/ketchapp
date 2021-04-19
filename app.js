@@ -32,7 +32,7 @@ app.use('/api/user', authRoute);
 
 //Home route
 app.get('/', (req, res) => {
-    res.send('Test!!!');
+    res.send('Merge?');
 });
 
 //Start server
