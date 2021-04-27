@@ -9,6 +9,7 @@ require('dotenv/config');
 //Init app
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
+
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -26,6 +27,7 @@ mongoose.connect(
 //Import routes
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const recipesRoute = require('./routes/recipes');
 
 //Load View Engine
 // app.set('views',path.join(__dirname,'views'));
@@ -34,11 +36,13 @@ const authRoute = require('./routes/auth');
 //Route Middlewares
 app.use('/api/users', usersRoute);
 app.use('/api/user', authRoute);
+app.use('/api/recipes', recipesRoute);
 
 //Home route
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/index.html'));
   });
+
 //Start server
 app.listen(3000, () => 
     console.log('Server up and running!')
