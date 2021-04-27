@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
 
 //Add a recipe
 router.post('/', (req, res) => {
+    const recipe = new Recipe({
+        typeofFood: req.body.typeofFood
+    });
+
+    recipe.save()
+    .then(data => {
+        res.status(200).json(data);
+    })
+    .catch(err => {
+        res.status(400).json(err);
+    })
 });
 
 //Get a specific recipe
