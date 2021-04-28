@@ -15,7 +15,14 @@ router.get('/', async (req, res) => {
 //Add a recipe
 router.post('/', (req, res) => {
     const recipe = new Recipe({
-        typeofFood: req.body.typeofFood
+        author: req.body.author,
+        ingredients: req.body.ingredients,
+        typeofFood: req.body.typeofFood,
+        imageURL: req.body.imageURL,
+        typeofFood: req.body.typeofFood,
+        title: req.body.title,
+        servings: req.body.servings,
+        cookingTime: req.body.cookingTime
     });
 
     recipe.save()
@@ -29,6 +36,12 @@ router.post('/', (req, res) => {
 
 //Get a specific recipe
 router.get('/:id', async (req, res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.id);
+        res.status(200).json(recipe);
+    } catch(err){
+        res.json({message: "There are some problems.. " + err});
+    }
 });
 
 //Delete a specific recipe
