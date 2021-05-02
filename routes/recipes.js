@@ -40,19 +40,15 @@ router.get('/:id', async (req, res) => {
         const recipe = await Recipe.findById(req.params.id);
         res.status(200).json(recipe);
     } catch(err){
-        res.json({message: "There are some problems.. " + err});
+        res.status(400).json({message: "There are some problems.. " + err});
     }
 });
 
 //Delete a specific recipe
 router.delete('/:id', async (req, res) => {
-
 });
 
 //Update a specific recipe
 router.patch('/:id', async (req, res) => {
-
 });
-
-
 module.exports = router;
