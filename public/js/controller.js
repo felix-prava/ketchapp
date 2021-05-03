@@ -9,7 +9,7 @@ const timeout = function (s) {
 
 const showRecipe = async function (){
   try {
-
+    
     //Loading recipe
     const res = await fetch(
       'http://localhost:3000/api/recipes/60899b7c63879f112092fa09'
