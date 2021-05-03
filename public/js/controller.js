@@ -1,3 +1,5 @@
+import * as model from './model.js'
+
 const timeout = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
@@ -16,35 +18,23 @@ const renderSpinner = function(parentElement){
         </svg>
       </div>
   `
+  parentElement.innerHTML = '';
   parentElement.insertAdjacentHTML('afterbegin', markup);
 }
 
 const showRecipe = async function (){
   try {
+    let recipeID = window.location.hash;
+    recipeID = recipeID.slice(1);
 
-    //Loading recipe
+    //Check to have a valid id
+    if (!recipeID) 
+      return;
     renderSpinner(recipeContainer);
 
-    const res = await fetch(
-      //'http://localhost:3000/api/recipes/60899b7c63879f112092fa09'
-      'http://localhost:3000/api/recipes/608e735c7b4f6930d8a5e5fa'
-    );
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`)
-    console.log(res, data);
-    let recipe = data;
-    recipe = {
-      id: recipe._id,
-      title: recipe.title,
-      typeofFood: recipe.typeofFood,
-      publisher: recipe.author,
-      image: recipe.imageURL,
-      servings: recipe.servings,
-      cookingTime: recipe.cookingTime,
-      ingredients: recipe.ingredients
-    }
-    console.log(recipe);
+    //Loading recipe
+    await model.loadRecipe(recipeID);
+    const recipe = model.state.recipe;
     
     //Rendering recipe
     const markup = `
@@ -143,3 +133,9 @@ const showRecipe = async function (){
   }
 };
 showRecipe();
+
+//Event listener for showing a recipe after selecting it
+window.addEventListener('hashchange', showRecipe);
+
+//Event listener for showing a recipe after loading a page with one
+window.addEventListener('load', showRecipe);
