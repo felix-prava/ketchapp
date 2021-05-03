@@ -1,7 +1,5 @@
 export const state = {
-    recipe: {
-
-    },
+    recipe: {},
 };
 
 export const loadRecipe = async function(recipeID) {
