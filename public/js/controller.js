@@ -5,20 +5,26 @@ const showRecipe = async function (){
   try {
     let recipeID = window.location.hash;
     recipeID = recipeID.slice(1);
+
     //Check to have a valid id
     if (!recipeID) 
       return;
       recipeView.renderSpinner();
+
     //Loading recipe
     await model.loadRecipe(recipeID);
+    
     //Rendering recipe
     recipeView.render(model.state.recipe);
+    
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
-showRecipe();
-//Event listener for showing a recipe after selecting it
-window.addEventListener('hashchange', showRecipe);
-//Event listener for showing a recipe after loading a page with one
-window.addEventListener('load', showRecipe);
+
+showRecipe(); // <- Should be deleted soon
+
+const init = function () {
+  recipeView.addHandlerRender(showRecipe);
+}
+init();
