@@ -23,7 +23,7 @@ export const loadRecipe = async function(recipeID) {
         }
         console.log(state.recipe);
     } catch(err){
-        alert(err);
-        //recipeView.renderError(errorMessage); <- Create and add the error message
+        console.log(err);
+        throw err;
     }
 }

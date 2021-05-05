@@ -2,7 +2,8 @@
 class RecipeView {
     #parentElement = document.querySelector('.recipe');
     #data;
-
+    #errorMessage = `We can't find this recipe. You should try something else!`; 
+    #successMessage = `Congrats! It's all good`;
     render(data) { 
         this.#data = data;
         const markup = this.#createMarkup();
@@ -26,7 +27,7 @@ class RecipeView {
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
       }
 
-    renderError (errorMessage) {
+    renderError (errorMessage = this.#errorMessage) {
         const markup = `
         <div class="error">
             <div>
@@ -35,6 +36,21 @@ class RecipeView {
                 </svg>
             </div>
             <p>${errorMessage}</p>
+        </div>
+        `
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+    }
+
+    renderSuccessMessage (successMessage = this.#successMessage) {
+        const markup = `
+        <div class="message">
+            <div>
+                <svg>
+                    <use href="../../img/icons.svg#icon-smile"></use>
+                </svg>
+            </div>
+            <p>${successMessage}</p>
         </div>
         `
         this.#clear();
