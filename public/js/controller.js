@@ -18,13 +18,13 @@ const showRecipe = async function (){
     recipeView.render(model.state.recipe);
     
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
-showRecipe();
 
-//Event listener for showing a recipe after selecting it
-window.addEventListener('hashchange', showRecipe);
+showRecipe(); // <- Should be deleted soon
 
-//Event listener for showing a recipe after loading a page with one
-window.addEventListener('load', showRecipe);
+const init = function () {
+  recipeView.addHandlerRender(showRecipe);
+}
+init();

@@ -14,7 +14,7 @@ class RecipeView {
         this.#parentElement.innerHTML = '';
     }
 
-    renderSpinner = function () {
+    renderSpinner () {
         const markup = `
             <div class="spinner">
               <svg>
@@ -22,9 +22,32 @@ class RecipeView {
               </svg>
             </div>
         `
-        this.#parentElement.innerHTML = '';
+        this.#clear();
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
       }
+
+    renderError (errorMessage) {
+        const markup = `
+        <div class="error">
+            <div>
+                <svg>
+                    <use href="../../img/icons.svg#icon-alert-triangle"></use>
+                </svg>
+            </div>
+            <p>${errorMessage}</p>
+        </div>
+        `
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+    }
+
+    addHandlerRender(handler){
+        //Event listener for showing a recipe after selecting it
+        window.addEventListener('hashchange', handler);
+
+        //Event listener for showing a recipe after loading a page with one
+        window.addEventListener('load', handler);
+    }
 
     #createMarkup() {
         return `
