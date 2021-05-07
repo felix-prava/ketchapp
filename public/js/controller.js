@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 const showRecipe = async function (){
   try {
@@ -25,6 +26,8 @@ const showRecipe = async function (){
 
 const controlSearchResults = async function() {
   try {
+    resultsView.renderSpinner();
+
     // Get the search qyery
     const query = searchView.getQuery();
     if (!query)
@@ -32,7 +35,7 @@ const controlSearchResults = async function() {
     
     // Load the model state with the types of food
     await model.loadSearchResults(query);
-    console.log(model.state.search.results);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
