@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 
 const showRecipe = async function (){
   try {
@@ -9,7 +10,7 @@ const showRecipe = async function (){
     //Check to have a valid id
     if (!recipeID) 
       return;
-      recipeView.renderSpinner();
+    recipeView.renderSpinner();
 
     //Loading recipe
     await model.loadRecipe(recipeID);
@@ -24,7 +25,14 @@ const showRecipe = async function (){
 
 const controlSearchResults = async function() {
   try {
-    await model.loadSearchResults('Pizza');
+    // Get the search qyery
+    const query = searchView.getQuery();
+    if (!query)
+      return;
+    
+    // Load the model state with the types of food
+    await model.loadSearchResults(query);
+    console.log(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
@@ -32,5 +40,6 @@ const controlSearchResults = async function() {
 
 const init = function () {
   recipeView.addHandlerRender(showRecipe);
+  searchView.addHandlerSearch(controlSearchResults);
 }
 init();
