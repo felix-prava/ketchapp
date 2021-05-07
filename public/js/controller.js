@@ -22,7 +22,13 @@ const showRecipe = async function (){
   }
 };
 
-showRecipe(); // <- Should be deleted soon
+const controlSearchResults = async function() {
+  try {
+    await model.loadSearchResults('Pizza');
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 const init = function () {
   recipeView.addHandlerRender(showRecipe);
