@@ -35,8 +35,7 @@ const controlSearchResults = async function() {
     
     // Load the model state with the types of food
     await model.loadSearchResults(query);
-    // resultsView.render(model.state.search.results);
-    resultsView.render(model.getSearchResultsPage(1));
+    resultsView.render(model.getSearchResultsPage());
   } catch (err) {
     console.log(err);
   }
