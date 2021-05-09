@@ -37,17 +37,26 @@ const controlSearchResults = async function() {
     // Load the model state with the types of food
     await model.loadSearchResults(query);
     // After that render them
-    resultsView.render(model.getSearchResultsPage(3));
+    resultsView.render(model.getSearchResultsPage());
 
     // Render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
+};
+
+const controlPagination = function (goToPage) {
+  // Render the new results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // Render the new pagination buttons
+  paginationView.render(model.state.search);
 }
 
 const init = function () {
   recipeView.addHandlerRender(showRecipe);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 }
 init();
