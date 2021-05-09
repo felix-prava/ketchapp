@@ -6,7 +6,7 @@ class RecipeView extends View{
     _errorMessage = `We can't find this recipe. You should try something else!`; 
     _successMessage = `Congrats! It's all good`;
 
-    addHandlerRender(handler){
+    addHandlerRender(handler) {
         //Event listener for showing a recipe after selecting it
         window.addEventListener('hashchange', handler);
 
@@ -14,7 +14,21 @@ class RecipeView extends View{
         window.addEventListener('load', handler);
     }
 
+    addHandlerUpdateServings (handler) {
+        this._parentElement.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn--update-servings');
+            if (!btn)
+                return;
+            const updateTo = +btn.dataset.updateTo;
+
+            // Update the recipe for the new number of servings
+            if (updateTo > 0)
+                handler(updateTo);
+        });
+    }
+
     _createMarkup() {
+        const currentServings = this._data.servings;
         return `
             <figure class="recipe__fig">
                 <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
@@ -35,16 +49,16 @@ class RecipeView extends View{
                 <svg class="recipe__info-icon">
                     <use href="../img/icons.svg#icon-users"></use>
                 </svg>
-                <span class="recipe__info-data recipe__info-data--people">${this._data.servings}</span>
+                <span class="recipe__info-data recipe__info-data--people">${currentServings}</span>
                 <span class="recipe__info-text">servings</span>
 
                 <div class="recipe__info-buttons">
-                    <button class="btn--tiny btn--increase-servings">
+                    <button class="btn--tiny btn--update-servings" data-update-to="${currentServings - 1}">
                     <svg>
                         <use href="../img/icons.svg#icon-minus-circle"></use>
                     </svg>
                     </button>
-                    <button class="btn--tiny btn--increase-servings">
+                    <button class="btn--tiny btn--update-servings" data-update-to="${currentServings + 1}">
                     <svg>
                         <use href="../img/icons.svg#icon-plus-circle"></use>
                     </svg>
