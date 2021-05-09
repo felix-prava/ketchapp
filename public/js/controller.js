@@ -1,15 +1,8 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
-
+import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 const showRecipe = async function (){
   try {
@@ -19,23 +12,42 @@ const showRecipe = async function (){
     //Check to have a valid id
     if (!recipeID) 
       return;
-      recipeView.renderSpinner();
+    recipeView.renderSpinner();
 
     //Loading recipe
     await model.loadRecipe(recipeID);
     
     //Rendering recipe
     recipeView.render(model.state.recipe);
-
     
   } catch (err) {
-    alert(err);
+    recipeView.renderError();
   }
 };
-showRecipe();
 
-//Event listener for showing a recipe after selecting it
-window.addEventListener('hashchange', showRecipe);
+const controlSearchResults = async function() {
+  try {
+    resultsView.renderSpinner();
 
-//Event listener for showing a recipe after loading a page with one
-window.addEventListener('load', showRecipe);
+    // Get the search qyery
+    const query = searchView.getQuery();
+    if (!query)
+      return;
+    
+    // Load the model state with the types of food
+    await model.loadSearchResults(query);
+    resultsView.render(model.getSearchResultsPage());
+
+    // Render initial pagination buttons
+
+    paginationView.render(model.state.search);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const init = function () {
+  recipeView.addHandlerRender(showRecipe);
+  searchView.addHandlerSearch(controlSearchResults);
+}
+init();

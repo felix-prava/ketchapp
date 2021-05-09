@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe');
 
+
+
 //Get all the recipes
 router.get('/', async (req, res) => {
     try{
@@ -32,6 +34,18 @@ router.post('/', (req, res) => {
     .catch(err => {
         res.status(400).json(err);
     })
+});
+
+//Get recipes for a type of food
+router.get('/searchResults', async (req, res) => {
+    try {
+        Recipe.find({ typeofFood: req.query.typeofFood }, function(err, recipes)
+        {
+            res.status(200).json(recipes);
+        });
+    } catch(err){
+        res.status(400).json({message: "There are some problems.. " + err});
+    }
 });
 
 //Get a specific recipe

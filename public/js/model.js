@@ -1,18 +1,21 @@
+import { API_URL, RES_PER_PAGE } from './config.js';
+import { getJSON } from './helpers.js';
+import recipeView from './views/recipeView.js';
+
 export const state = {
     recipe: {},
+    search: {
+        query: '',
+        results: [],
+        page: 1,
+        resultsPerPage: RES_PER_PAGE,
+    },
 };
 
 export const loadRecipe = async function(recipeID) {
     try{
-        const res = await fetch(
-            //'http://localhost:3000/api/recipes/60899b7c63879f112092fa09'
-            //'http://localhost:3000/api/recipes/608e735c7b4f6930d8a5e5fa'
-            `http://localhost:3000/api/recipes/${recipeID}`
-        );
-        const data = await res.json();
-    
-        if (!res.ok) throw new Error(`${data.message} (${res.status})`)
-        console.log(res, data);
+        const data = await getJSON(`${API_URL}/${recipeID}`)
+
         let recipe = data;
         state.recipe = {
             id: recipe._id,
@@ -26,6 +29,36 @@ export const loadRecipe = async function(recipeID) {
         }
         console.log(state.recipe);
     } catch(err){
-        alert(err);
+        console.log(err);
+        throw err;
     }
-}
+};
+
+export const loadSearchResults = async function(query) {
+    try {
+        state.search.query = query;
+        const recipes = await getJSON(`${API_URL}/searchResults?typeofFood=${query}`);
+
+        state.search.results = recipes.map(recipe => {
+            return {
+                id: recipe._id,
+                title: recipe.title,
+                publisher: recipe.author,
+                image: recipe.imageURL
+            };
+        });
+    } catch(err){
+        console.log(err);
+        throw err;
+    }
+};
+
+export const getSearchResultsPage = function (page = state.search.page) {
+
+    state.search.page = page;
+
+    const start = (page - 1) * state.search.resultsPerPage; // 0
+    const end = page * state.search.resultsPerPage; // 9
+
+    return state.search.results.slice(start, end);
+  };

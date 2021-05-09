@@ -10,7 +10,7 @@ The user will have email, password, username, country.
 
 Chefs can also periodically add new recipes. There are different categories of recipes (eg burgers, pizza, pasta), and using the search button we will receive recipes depending on what we are looking for.
 
-Technologies: Javascript, NodeJS, MongoDB
+Technologies: Javascript, NodeJS, MongoDB.
 
 Interface: https://xd.adobe.com/view/b8124ef2-0087-45e0-beea-3a1095b807f5-ed41/?fbclid=IwAR3GBjpV_FomuUYpbXa2utO-RARxmEGRcWNYufhM8qnI6gLB-g8EKU9Zxto
 
