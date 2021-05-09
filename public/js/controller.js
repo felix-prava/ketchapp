@@ -54,8 +54,17 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 }
 
+const servingsHandler = function (newServings) {
+  // Update the recipe sevings
+  model.updateServings(newServings);
+
+  // Update the recipe view
+  recipeView.render(model.state.recipe);
+}
+
 const init = function () {
   recipeView.addHandlerRender(showRecipe);
+  recipeView.addHandlerUpdateServings(servingsHandler)
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }
