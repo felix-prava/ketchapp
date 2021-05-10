@@ -1,5 +1,5 @@
 import { API_URL, RES_PER_PAGE } from './config.js';
-import { getJSON } from './helpers.js';
+import { getJSON, sendJSON } from './helpers.js';
 import recipeView from './views/recipeView.js';
 
 export const state = {
@@ -117,3 +117,32 @@ init();
 const clearFavourites = function () {
     localStorage.clear('favourites');
 }
+
+export const uploadRecipe = async function (newRecipe) {
+    try { 
+        // Take the valid ingredients
+        const ingredients = Object.entries(newRecipe).filter(entry =>
+            entry[0].startsWith('ingredient') && entry[1] !== ''
+        ).map(ingredient => {
+            const ingredientArray = ingredient[1].trim().split(',');
+            if (ingredientArray.length !== 3)
+                throw new Error('Wrong ingredient format!')
+            const [quantity, unit, description] = ingredientArray;
+            return { quantity: quantity ? +quantity : null, unit, description };
+        });
+        const recipe = {
+            author: newRecipe.author,
+            ingredients: ingredients,
+            imageURL: newRecipe.imageURL,
+            title: newRecipe.title,
+            servings: +newRecipe.servings,
+            cookingTime: newRecipe.cookingTime,
+            typeofFood: newRecipe.typeofFood
+        }
+        console.log(recipe);
+        const data = await sendJSON(`${API_URL}`, recipe);
+        console.log(data);
+    } catch (e) {
+        throw e;
+    }
+};

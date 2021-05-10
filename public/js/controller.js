@@ -87,9 +87,14 @@ const controlFavourites = function () {
   favouritesView.render(model.state.favourites);
 }
 
-const controlAddRecipe = function (newRecipe) {
-  // Add the new recipe in the DB
-  console.log(newRecipe);
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // Add the new recipe in the DB
+    await model.uploadRecipe(newRecipe);
+  } catch (err) {
+    addRecipeView.renderError(err.message);
+  }
+  
 }
 
 const init = function () {
