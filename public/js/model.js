@@ -13,21 +13,24 @@ export const state = {
     favourites: [],
 };
 
-export const loadRecipe = async function(recipeID) {
-    try{
-        const data = await getJSON(`${API_URL}/${recipeID}`)
-
-        let recipe = data;
-        state.recipe = {
+const createRecipeObject = function(data) {
+    const recipe = data;
+        return {
             id: recipe._id,
             title: recipe.title,
             typeofFood: recipe.typeofFood,
             publisher: recipe.author,
-            image: recipe.imageURL,
+            imageURL: recipe.imageURL,
             servings: recipe.servings,
             cookingTime: recipe.cookingTime,
             ingredients: recipe.ingredients
-        }
+        };
+};
+
+export const loadRecipe = async function(recipeID) {
+    try{
+        const data = await getJSON(`${API_URL}/${recipeID}`)
+        state.recipe = createRecipeObject(data);
 
         if (state.favourites.some(favourite => favourite.id === recipeID)) {
             state.recipe.favourite = true;
@@ -51,7 +54,7 @@ export const loadSearchResults = async function(query) {
                 id: recipe._id,
                 title: recipe.title,
                 publisher: recipe.author,
-                image: recipe.imageURL
+                imageURL: recipe.imageURL
             };
         });
         state.search.page = 1;
@@ -117,6 +120,7 @@ init();
 const clearFavourites = function () {
     localStorage.clear('favourites');
 }
+//clearFavourites();
 
 export const uploadRecipe = async function (newRecipe) {
     try { 
@@ -139,9 +143,9 @@ export const uploadRecipe = async function (newRecipe) {
             cookingTime: newRecipe.cookingTime,
             typeofFood: newRecipe.typeofFood
         }
-        console.log(recipe);
         const data = await sendJSON(`${API_URL}`, recipe);
-        console.log(data);
+        state.recipe = createRecipeObject(data);
+        addFavourite(state.recipe);
     } catch (e) {
         throw e;
     }
