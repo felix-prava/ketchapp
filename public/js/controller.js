@@ -9,15 +9,18 @@ const showRecipe = async function (){
     let recipeID = window.location.hash;
     recipeID = recipeID.slice(1);
 
-    //Check to have a valid id
+    // Check to have a valid id
     if (!recipeID) 
       return;
     recipeView.renderSpinner();
 
-    //Loading recipe
+    // Update results view to mark selected recipe
+    resultsView.update(model.getSearchResultsPage());
+
+    // Loading recipe
     await model.loadRecipe(recipeID);
     
-    //Rendering recipe
+    // Rendering recipe
     recipeView.render(model.state.recipe);
     
   } catch (err) {
@@ -59,7 +62,7 @@ const servingsHandler = function (newServings) {
   model.updateServings(newServings);
 
   // Update the recipe view
-  recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 }
 
 const init = function () {
