@@ -5,25 +5,24 @@ const jwt = require('jsonwebtoken');
 const { registerValidation, loginValidation } = require('./validation')
 
 
-//Register a user
+// Register a user
 router.post('/register', async (req, res) => {
 
-    //Data validation before creating a user
+    // Data validation before creating a user
     const { error } = registerValidation(req.body);
     if (error)
         return res.status(400).send(error.details[0].message);
 
-    //Checking if we have a user with the same email address
+    // Checking if we have a user with the same email address
     const emailExist = await User.findOne({email: req.body.email});
     if (emailExist)
         return res.status(400).send('This email is already used!');
 
-    //Password is hashed
+    // Password is hashed
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-
-    //Create a new user
+    // Create a new user
     const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -39,28 +38,27 @@ router.post('/register', async (req, res) => {
     }
 });
 
-//Login a user
+// Login a user
 router.post('/login', async (req, res) => {
 
-    //Data validation before creating a user
+    // Data validation before creating a user
     const { error } = loginValidation(req.body);
     if (error)
         return res.status(400).send(error.details[0].message);
 
-    //Checking if the email match a user
+    // Checking if the email match a user
     const user = await User.findOne({email: req.body.email});
     if (!user)
         return res.status(400).send('Email or password is wrong!');
 
-    //Checking if the password is correct
+    // Checking if the password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword)
         return res.status(400).send('Email or password is wrong');
 
-    //Creat a JSON token
+    // Creat a JSON token
     const token = jwt.sign({_id: user._id}, process.env.SECRET_TOKEN);
-    res.header('auth-token', token).send(token);    
-
+    res.header('auth-token', token).send(token);
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import favouritesView from './views/favouritesView.js';
+import addRecipeView from './views/addRecipeView.js';
 
 const showRecipe = async function (){
   try {
@@ -86,6 +87,11 @@ const controlFavourites = function () {
   favouritesView.render(model.state.favourites);
 }
 
+const controlAddRecipe = function (newRecipe) {
+  // Add the new recipe in the DB
+  console.log(newRecipe);
+}
+
 const init = function () {
   favouritesView.addHandlerRender(controlFavourites);
   recipeView.addHandlerRender(showRecipe);
@@ -93,5 +99,6 @@ const init = function () {
   recipeView.addHandlerAddFavourite(controlAddFavourite);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 }
 init();
