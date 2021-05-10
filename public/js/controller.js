@@ -65,9 +65,15 @@ const servingsHandler = function (newServings) {
   recipeView.update(model.state.recipe);
 }
 
+const controlAddFavourite = function () {
+  model.addFavourite(model.state.recipe);
+  recipeView.update(model.state.recipe);
+}
+
 const init = function () {
   recipeView.addHandlerRender(showRecipe);
-  recipeView.addHandlerUpdateServings(servingsHandler)
+  recipeView.addHandlerUpdateServings(servingsHandler);
+  recipeView.addHandlerAddFavourite(controlAddFavourite);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }
