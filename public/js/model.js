@@ -78,6 +78,10 @@ export const updateServings = function (newServings) {
     state.recipe.servings = newServings;
 };
 
+const persistFavourites = function (recipe) {
+    localStorage.setItem('favourites', JSON.stringify(state.favourites));
+}
+
 export const addFavourite = function (recipe) {
     // Add a favourite recipe
     state.favourites.push(recipe);
@@ -86,6 +90,8 @@ export const addFavourite = function (recipe) {
     if (recipe.id === state.recipe.id) {
         state.recipe.favourite = true;
     }
+
+    persistFavourites();
 };
 
 export const deleteFavourite = function (recipeID) {
@@ -97,5 +103,17 @@ export const deleteFavourite = function (recipeID) {
     if (recipeID === state.recipe.id) {
         state.recipe.favourite = false;
     }
+
+    persistFavourites();
 };
 
+const init = function (){
+    const storage = localStorage.getItem('favourites');
+    if (storage)
+        state.favourites = JSON.parse(storage);
+};
+init();
+
+const clearFavourites = function () {
+    localStorage.clear('favourites');
+}

@@ -17,6 +17,8 @@ const showRecipe = async function (){
 
     // Update results view to mark selected recipe
     resultsView.update(model.getSearchResultsPage());
+
+    // Update favourites view
     favouritesView.update(model.state.favourites);
 
     // Loading recipe
@@ -24,7 +26,6 @@ const showRecipe = async function (){
     
     // Rendering recipe
     recipeView.render(model.state.recipe);
-    
   } catch (err) {
     recipeView.renderError();
   }
@@ -81,7 +82,12 @@ const controlAddFavourite = function () {
   favouritesView.render(model.state.favourites);
 }
 
+const controlFavourites = function () {
+  favouritesView.render(model.state.favourites);
+}
+
 const init = function () {
+  favouritesView.addHandlerRender(controlFavourites);
   recipeView.addHandlerRender(showRecipe);
   recipeView.addHandlerUpdateServings(servingsHandler);
   recipeView.addHandlerAddFavourite(controlAddFavourite);
