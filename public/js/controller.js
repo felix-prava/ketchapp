@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import favouritesView from './views/favouritesView.js';
 
 const showRecipe = async function (){
   try {
@@ -16,6 +17,7 @@ const showRecipe = async function (){
 
     // Update results view to mark selected recipe
     resultsView.update(model.getSearchResultsPage());
+    favouritesView.update(model.state.favourites);
 
     // Loading recipe
     await model.loadRecipe(recipeID);
@@ -66,12 +68,17 @@ const servingsHandler = function (newServings) {
 }
 
 const controlAddFavourite = function () {
+  // Add/remove a favourite recipe
   if (!model.state.recipe.favourite)
     model.addFavourite(model.state.recipe);
   else
     model.deleteFavourite(model.state.recipe.id);
     
+  // Update recipe view
   recipeView.update(model.state.recipe);
+
+  // Render favourites recipes
+  favouritesView.render(model.state.favourites);
 }
 
 const init = function () {
