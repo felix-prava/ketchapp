@@ -66,7 +66,11 @@ const servingsHandler = function (newServings) {
 }
 
 const controlAddFavourite = function () {
-  model.addFavourite(model.state.recipe);
+  if (!model.state.recipe.favourite)
+    model.addFavourite(model.state.recipe);
+  else
+    model.deleteFavourite(model.state.recipe.id);
+    
   recipeView.update(model.state.recipe);
 }
 

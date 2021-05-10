@@ -28,6 +28,12 @@ export const loadRecipe = async function(recipeID) {
             cookingTime: recipe.cookingTime,
             ingredients: recipe.ingredients
         }
+
+        if (state.favourites.some(favourite => favourite.id === recipeID)) {
+            state.recipe.favourite = true;
+        } else {
+            state.recipe.favourite = false;
+        }
         console.log(state.recipe);
     } catch(err){
         console.log(err);
@@ -80,5 +86,16 @@ export const addFavourite = function (recipe) {
     if (recipe.id === state.recipe.id) {
         state.recipe.favourite = true;
     }
-}
+};
+
+export const deleteFavourite = function (recipeID) {
+    // Delete favourite
+    const index = state.favourites.findIndex(element => element.id === recipeID);
+    state.favourites.splice(index, 1);
+
+    // Mark the recipe as NOT a favourite
+    if (recipeID === state.recipe.id) {
+        state.recipe.favourite = false;
+    }
+};
 
