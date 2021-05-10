@@ -1,9 +1,11 @@
 import * as model from './model.js';
+import { FORM_CLOSE_SEC, API_URL } from './config.js'
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import favouritesView from './views/favouritesView.js';
+import addRecipeView from './views/addRecipeView.js';
 
 const showRecipe = async function (){
   try {
@@ -86,6 +88,37 @@ const controlFavourites = function () {
   favouritesView.render(model.state.favourites);
 }
 
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // Loading spinner
+    addRecipeView.renderSpinner();
+
+    // Add the new recipe in the DB
+    await model.uploadRecipe(newRecipe);
+    //console.log(model.state.recipe);
+
+    // Render recipe
+    recipeView.render(model.state.recipe);
+
+    // Success message
+    addRecipeView.renderSuccessMessage();
+
+    // Render favourites view
+    favouritesView.render(model.state.favourites);
+
+    // Close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, FORM_CLOSE_SEC * 1000);
+
+    window.location.replace(`http://localhost:3000/#${model.state.recipe.id}`);
+    window.location.reload();
+  } catch (err) {
+    addRecipeView.renderError(err.message);
+  }
+  
+}
+
 const init = function () {
   favouritesView.addHandlerRender(controlFavourites);
   recipeView.addHandlerRender(showRecipe);
@@ -93,5 +126,6 @@ const init = function () {
   recipeView.addHandlerAddFavourite(controlAddFavourite);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 }
 init();

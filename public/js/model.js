@@ -1,5 +1,5 @@
 import { API_URL, RES_PER_PAGE } from './config.js';
-import { getJSON } from './helpers.js';
+import { getJSON, sendJSON } from './helpers.js';
 import recipeView from './views/recipeView.js';
 
 export const state = {
@@ -13,21 +13,24 @@ export const state = {
     favourites: [],
 };
 
-export const loadRecipe = async function(recipeID) {
-    try{
-        const data = await getJSON(`${API_URL}/${recipeID}`)
-
-        let recipe = data;
-        state.recipe = {
+const createRecipeObject = function(data) {
+    const recipe = data;
+        return {
             id: recipe._id,
             title: recipe.title,
             typeofFood: recipe.typeofFood,
             publisher: recipe.author,
-            image: recipe.imageURL,
+            imageURL: recipe.imageURL,
             servings: recipe.servings,
             cookingTime: recipe.cookingTime,
             ingredients: recipe.ingredients
-        }
+        };
+};
+
+export const loadRecipe = async function(recipeID) {
+    try{
+        const data = await getJSON(`${API_URL}/${recipeID}`)
+        state.recipe = createRecipeObject(data);
 
         if (state.favourites.some(favourite => favourite.id === recipeID)) {
             state.recipe.favourite = true;
@@ -51,7 +54,7 @@ export const loadSearchResults = async function(query) {
                 id: recipe._id,
                 title: recipe.title,
                 publisher: recipe.author,
-                image: recipe.imageURL
+                imageURL: recipe.imageURL
             };
         });
         state.search.page = 1;
@@ -117,3 +120,33 @@ init();
 const clearFavourites = function () {
     localStorage.clear('favourites');
 }
+//clearFavourites();
+
+export const uploadRecipe = async function (newRecipe) {
+    try { 
+        // Take the valid ingredients
+        const ingredients = Object.entries(newRecipe).filter(entry =>
+            entry[0].startsWith('ingredient') && entry[1] !== ''
+        ).map(ingredient => {
+            const ingredientArray = ingredient[1].trim().split(',');
+            if (ingredientArray.length !== 3)
+                throw new Error('Wrong ingredient format!')
+            const [quantity, unit, description] = ingredientArray;
+            return { quantity: quantity ? +quantity : null, unit, description };
+        });
+        const recipe = {
+            author: newRecipe.author,
+            ingredients: ingredients,
+            imageURL: newRecipe.imageURL,
+            title: newRecipe.title,
+            servings: +newRecipe.servings,
+            cookingTime: newRecipe.cookingTime,
+            typeofFood: newRecipe.typeofFood
+        }
+        const data = await sendJSON(`${API_URL}`, recipe);
+        state.recipe = createRecipeObject(data);
+        addFavourite(state.recipe);
+    } catch (e) {
+        throw e;
+    }
+};

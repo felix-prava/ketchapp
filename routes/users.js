@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 //Delete a specific user
 router.delete('/:id', async (req, res) => {
     try{
-        const userDeleted = await User.deleteOne({_id: req.params.id}); //or maybe I should try remove instead of deleteOne
+        const userDeleted = await User.deleteOne({_id: req.params.id});
         res.status(200).json(userDeleted);
     } catch(err){
         res.json({message: err})
@@ -62,6 +62,5 @@ router.patch('/:id', async (req, res) => {
         res.json({message: err});
     }
 });
-
 
 module.exports = router;
