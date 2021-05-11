@@ -24,10 +24,12 @@ router.post('/', (req, res) => {
 
     user.save()
     .then(data => {
-        res.status(200).json(data);
+        res.redirect('/login');
+        //res.status(200).json(data);
     })
     .catch(err => {
-        res.status(400).json(err);
+        res.redirect('/register');
+        //res.status(400).json(err);
     })
 });
 

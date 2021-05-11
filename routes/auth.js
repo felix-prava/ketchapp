@@ -2,8 +2,19 @@ const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const { registerValidation, loginValidation } = require('./validation')
 
+
+// Route for the login page
+router.get('/login',function(req,res) {
+    res.sendFile(path.join(__dirname+'/viewsss/login.html'));
+});
+
+// Route for the register page
+router.get('/register',function(req,res) {
+    res.sendFile(path.join(__dirname+'/register.html'));
+});
 
 // Register a user
 router.post('/register', async (req, res) => {
@@ -28,7 +39,7 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         username: req.body.username,
         password: hashedPassword,
-        country: req.body.location,
+        country: req.body.country,
     });
     try {
         const newUser = await user.save();
@@ -40,8 +51,7 @@ router.post('/register', async (req, res) => {
 
 // Login a user
 router.post('/login', async (req, res) => {
-
-    // Data validation before creating a user
+    // Data validation before logging in a user
     const { error } = loginValidation(req.body);
     if (error)
         return res.status(400).send(error.details[0].message);
@@ -55,10 +65,7 @@ router.post('/login', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword)
         return res.status(400).send('Email or password is wrong');
-
-    // Creat a JSON token
-    const token = jwt.sign({_id: user._id}, process.env.SECRET_TOKEN);
-    res.header('auth-token', token).send(token);
+    res.status(200).send(user);
 });
 
 module.exports = router;
