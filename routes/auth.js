@@ -8,12 +8,12 @@ const { registerValidation, loginValidation } = require('./validation')
 
 // Route for the login page
 router.get('/login',function(req,res) {
-    res.sendFile(path.join(__dirname+'/viewsss/login.html'));
+    res.sendFile(path.join(__dirname+'/views/login.html'));
 });
 
 // Route for the register page
 router.get('/register',function(req,res) {
-    res.sendFile(path.join(__dirname+'/register.html'));
+    res.sendFile(path.join(__dirname+'/views/register.html'));
 });
 
 // Register a user

@@ -35,7 +35,7 @@ const recipesRoute = require('./routes/recipes');
 
 // Route Middlewares
 app.use('/api/users', usersRoute);
-app.use('/api/user', authRoute);
+app.use('/user', authRoute);
 app.use('/api/recipes', recipesRoute);
 
 // Home route
