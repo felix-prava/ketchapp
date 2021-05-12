@@ -71,8 +71,8 @@ const authRoute = require('./routes/auth');
 const recipesRoute = require('./routes/recipes');
 
 //Load View Engine
-// app.set('views',path.join(__dirname,'views'));
-// app.set('view engine','pug');
+app.set('views',path.join(__dirname,'routes/pugViews'));
+app.set('view engine','pug');
 
 // Route Middlewares
 app.use('/api/users', usersRoute);
