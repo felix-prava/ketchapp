@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 //Get all the users
@@ -43,7 +44,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-//Delete a specific user
+// Delete a specific user
 router.delete('/:id', async (req, res) => {
     try{
         const userDeleted = await User.deleteOne({_id: req.params.id});
@@ -53,14 +54,32 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-//Update a specific user
-router.patch('/:id', async (req, res) => {
-    try{
-        const updatedUser = await User.updateOne(
-            {_id: req.params.id}, 
-            {$set: {name: req.body.name}});
-        res.json(updatedUser);
-    } catch (err) {
+// Update a specific user
+router.post('/edit/:id', async (req, res) => {
+    try {
+        const userUpdated = await User.findById(req.params.id);
+
+        if (req.body.password){ 
+            // Password is hashed
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            userUpdated.password = hashedPassword;
+        }
+
+        userUpdated.name = req.body.name;
+        userUpdated.username = req.body.username;
+        userUpdated.email = req.body.email;
+        userUpdated.country = req.body.country;
+
+        let query = {_id : req.params.id}
+        User.updateOne(query, userUpdated, function (err) {
+            if (err) {
+                console.log(err);
+                res.status(400).json({message: err});
+            } else
+                res.status(200).json(userUpdated);
+        });
+    } catch(err){
         res.json({message: err});
     }
 });

@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require("dotenv");
 const path = require('path');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 require('dotenv/config');
 
 // Init app
@@ -15,7 +19,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 // Parse application/json
 app.use(bodyParser.json());
-
 app.use(cors());
 
 // Connect to DB
@@ -23,6 +26,44 @@ mongoose.connect(
     process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true }, () => 
     console.log('Connected to DB!')
 );
+
+//Express Session Middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
+}));
+
+//Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function(req, res, next){
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
+
+//Express Validator Middleware
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+        , root = namespace.shift()
+        , formParam = root;
+
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg : msg,
+            value : value
+        };
+    }
+}));
+
+// Passport Config
+require('./config/passport'); //(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Import routes
 const usersRoute = require('./routes/users');
