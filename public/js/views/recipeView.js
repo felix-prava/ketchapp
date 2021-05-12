@@ -111,11 +111,7 @@ class RecipeView extends View{
 
             <div class="recipe__directions">
                 <h2 class="heading--2">How to cook it</h2>
-                <p class="recipe__directions-text">
-                This recipe was carefully designed and tested by
-                KetchApp team's chefs. You'll probably love it! 
-                Below it's a link to a video where you can see how to cook it.
-                </p>
+                <p class="recipe__directions-text">${this._data.description}</p>
                 <a
                 class="btn--small recipe__btn"
                 href="http://ketchApp.com/team/"

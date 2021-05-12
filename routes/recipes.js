@@ -24,7 +24,8 @@ router.post('/', (req, res) => {
         typeofFood: req.body.typeofFood,
         title: req.body.title,
         servings: req.body.servings,
-        cookingTime: req.body.cookingTime
+        cookingTime: req.body.cookingTime,
+        description: req.body.description
     });
 
     recipe.save()
@@ -60,6 +61,12 @@ router.get('/:id', async (req, res) => {
 
 //Delete a specific recipe
 router.delete('/:id', async (req, res) => {
+    try{
+        const recipeDeleted = await Recipe.deleteOne({_id: req.params.id});
+        res.status(200).json(recipeDeleted);
+    } catch(err){
+        res.json({message: err})
+    }
 });
 
 //Update a specific recipe

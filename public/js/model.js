@@ -1,6 +1,5 @@
 import { API_URL, RES_PER_PAGE } from './config.js';
 import { getJSON, sendJSON } from './helpers.js';
-import recipeView from './views/recipeView.js';
 
 export const state = {
     recipe: {},
@@ -23,7 +22,8 @@ const createRecipeObject = function(data) {
             imageURL: recipe.imageURL,
             servings: recipe.servings,
             cookingTime: recipe.cookingTime,
-            ingredients: recipe.ingredients
+            ingredients: recipe.ingredients,
+            description: recipe.description
         };
 };
 
@@ -141,7 +141,8 @@ export const uploadRecipe = async function (newRecipe) {
             title: newRecipe.title,
             servings: +newRecipe.servings,
             cookingTime: newRecipe.cookingTime,
-            typeofFood: newRecipe.typeofFood
+            typeofFood: newRecipe.typeofFood,
+            description: newRecipe.description
         }
         const data = await sendJSON(`${API_URL}`, recipe);
         state.recipe = createRecipeObject(data);

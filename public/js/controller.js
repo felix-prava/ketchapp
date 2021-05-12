@@ -115,8 +115,7 @@ const controlAddRecipe = async function (newRecipe) {
     window.location.reload();
   } catch (err) {
     addRecipeView.renderError(err.message);
-  }
-  
+  } 
 }
 
 const init = function () {
