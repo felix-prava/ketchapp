@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
+const passport = require('passport');
 const session = require('express-session');
 const { registerValidation, loginValidation } = require('./validation')
 
@@ -42,12 +42,12 @@ router.use(expressValidator({
 }));
 
 // Route for the login page
-router.get('/login',function(req,res) {
+router.get('/login', isAuthenticated, function(req,res) {
     res.render('login');
 });
 
 // Route for the register page
-router.get('/register',function(req,res) {
+router.get('/register', isAuthenticated, function(req,res) {
     res.render('register');
     //res.sendFile(path.join(__dirname+'/views/register.html'));
 });
@@ -85,7 +85,8 @@ router.post('/register', async (req, res) => {
     });
     try {
         const newUser = await user.save();
-        res.status(200).send(newUser);
+        req.flash("success", 'Congrats, you just created your account!');
+        res.redirect('/user/login');
     } catch (err){
         req.flash("danger", 'Internal problems, please try again!');
         res.redirect('/user/register');
@@ -94,7 +95,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login a user
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
     // Data validation before logging in a user
     const { error } = loginValidation(req.body);
     if (error){
@@ -104,7 +105,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Checking if the email match a user
-    const user = await User.findOne({email: req.body.email});
+    const user = await User.findOne({email: req.body.username});
     if (!user){
         req.flash("danger", 'Email or password is wrong!');
         res.redirect('/user/login');
@@ -118,7 +119,21 @@ router.post('/login', async (req, res) => {
         res.redirect('/user/login');
         return;
     }
-    res.redirect('/home');
+
+    passport.authenticate('local', {
+        successRedirect:'/home',
+        failureRedirect:'/user/login',
+        failureFlash: true
+    })(req, res, next);
 });
+
+// Access Control
+function isAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        res.redirect('/home');
+    } else{
+        return next();
+    }
+}
 
 module.exports = router;
