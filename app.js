@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require("dotenv");
 const path = require('path');
+const passport = require('passport');
 require('dotenv/config');
 
 // Init app
@@ -15,7 +16,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 // Parse application/json
 app.use(bodyParser.json());
-
 app.use(cors());
 
 // Connect to DB
@@ -24,14 +24,20 @@ mongoose.connect(
     console.log('Connected to DB!')
 );
 
+// Passport Config
+require('./config/passport');(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Import routes
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const recipesRoute = require('./routes/recipes');
 
 //Load View Engine
-// app.set('views',path.join(__dirname,'views'));
-// app.set('view engine','pug');
+app.set('views',path.join(__dirname,'routes/pugViews'));
+app.set('view engine','pug');
 
 // Route Middlewares
 app.use('/api/users', usersRoute);
@@ -57,8 +63,6 @@ app.get('/login',function(req,res) {
 app.get('/register',function(req,res) {
     res.sendFile(path.join(__dirname+'/public/register.html'));
 });
-
-
 
 // Start server
 app.listen(3000, () => 

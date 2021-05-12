@@ -1,0 +1,28 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    link(href='https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700' rel='stylesheet')
+    link(rel='shortcut icon' href='/img/bottle.png' type='image/x-icon')
+    link(rel='stylesheet' type='text/css' href='/style.css')
+    script(type='module' defer='' src='/js/controller.js')
+    title KetchApp - Be your own chef
+.container
+    div 
+        != messages('message', locals)
+    header.header
+        img.header__logo(src='/img/logo.png' alt='Logo')
+        nav.nav
+    div
+        form(method='POST' action='/user/login')
+            #form-group
+                label Email:
+                input.form-control(name='email' type='email')
+            #form-group
+                label Password:
+                input.form-control(name='password' type='password')
+            br
+            input.btn.btn-primary(type='submit' value='Submit')
+        br
+        a(href='/user/register') New memeber? Sign up now
