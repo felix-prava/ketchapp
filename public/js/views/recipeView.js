@@ -112,16 +112,6 @@ class RecipeView extends View{
             <div class="recipe__directions">
                 <h2 class="heading--2">How to cook it</h2>
                 <p class="recipe__directions-text">${this._data.description}</p>
-                <a
-                class="btn--small recipe__btn"
-                href="http://ketchApp.com/team/"
-                target="_blank"
-                >
-                    <span>I'll try it</span>
-                    <svg class="search__icon">
-                        <use href="../img/icons.svg#icon-arrow-right"></use>
-                    </svg>
-                </a>
             </div>
         `;
     }

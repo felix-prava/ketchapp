@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe');
 
-
-
-//Get all the recipes
+// Get all the recipes
 router.get('/', async (req, res) => {
     try{
         const recipes = await Recipe.find();
@@ -14,7 +12,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Add a recipe
+// Add a recipe
 router.post('/', (req, res) => {
     const recipe = new Recipe({
         author: req.body.author,
@@ -37,7 +35,7 @@ router.post('/', (req, res) => {
     })
 });
 
-//Get recipes for a type of food
+// Get recipes for a type of food
 router.get('/searchResults', async (req, res) => {
     try {
         Recipe.find({ typeofFood: req.query.typeofFood }, function(err, recipes)
@@ -49,7 +47,7 @@ router.get('/searchResults', async (req, res) => {
     }
 });
 
-//Get a specific recipe
+// Get a specific recipe
 router.get('/:id', async (req, res) => {
     try {
         const recipe = await Recipe.findById(req.params.id);
@@ -59,7 +57,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-//Delete a specific recipe
+// Delete a specific recipe
 router.delete('/:id', async (req, res) => {
     try{
         const recipeDeleted = await Recipe.deleteOne({_id: req.params.id});
@@ -69,7 +67,7 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-//Update a specific recipe
+// Update a specific recipe
 router.patch('/:id', async (req, res) => {
 });
 module.exports = router;
