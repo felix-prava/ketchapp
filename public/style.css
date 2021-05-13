@@ -23,7 +23,7 @@ body {
   font-family: "Nunito Sans", sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  background-color: #85FFBD;
+  background-color: #16e010;
   background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
   background-size: cover;
   background-repeat: no-repeat;
@@ -84,7 +84,7 @@ body {
 .heading--2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #f38e82;
+  color: #16e010;
   text-transform: uppercase;
   margin-bottom: 2.5rem;
   text-align: center;
@@ -109,7 +109,7 @@ body {
 .error svg {
   height: 3rem;
   width: 3rem;
-  fill: #f38e82;
+  fill: #16e010;
   transform: translateY(-0.3rem);
 }
 .message p,
@@ -203,7 +203,7 @@ body {
 .nav__btn svg {
   height: 2.4rem;
   width: 2.4rem;
-  fill: #f38e82;
+  fill: #16e010;
   margin-right: 0.7rem;
   transform: translateY(-1px);
 }
@@ -234,10 +234,6 @@ body {
   visibility: visible;
   opacity: 1;
 }
-/* ///////////////////////////////////////////////////////////// */
-/* ///////////////////////////////////////////////////////////// */
-/* ///////////////////////////////////////////////////////////// */
-/* ///////////////////////////////////////////////////////////// */
 
 .btn--small, .btn--small:link, .btn--small:visited {
   font-size: 1.4rem;
@@ -252,7 +248,7 @@ body {
 }
 
 .btn--inline {
-  color: #f38e82;
+  color: #16e010;
   font-size: 1.3rem;
   font-weight: 600;
   border: none;
@@ -274,7 +270,7 @@ body {
   margin: 0 0.4rem;
 }
 .btn--inline:hover {
-  color: #f48982;
+  color: #16e010;
   background-color: #f2efee;
 }
 .btn--inline:focus {
@@ -282,7 +278,7 @@ body {
 }
 
 .btn--round {
-  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  background-image: linear-gradient(to right bottom, #85FFBD, #FFFB7D);
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -315,18 +311,18 @@ body {
 .btn--tiny svg {
   height: 100%;
   width: 100%;
-  fill: #f38e82;
+  fill: #16e010;
   transition: all 0.3s;
 }
 .btn--tiny:focus {
   outline: none;
 }
 .btn--tiny:hover svg {
-  fill: #f48982;
+  fill: #16e010;
   transform: translateY(-1px);
 }
 .btn--tiny:active svg {
-  fill: #f48982;
+  fill: #16e010;
   transform: translateY(0);
 }
 .btn--tiny:not(:last-child) {
@@ -346,7 +342,7 @@ body {
 .spinner svg {
   height: 6rem;
   width: 6rem;
-  fill: #f38e82;
+  fill: #16e010;
   animation: rotate 2s infinite linear;
 }
 
@@ -394,7 +390,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  background-image: linear-gradient(to right bottom, #85FFBD, #FFFB7D);
   opacity: 0.4;
 }
 .preview__fig img {
@@ -414,7 +410,7 @@ body {
 .preview__title {
   grid-column: 1/-1;
   font-size: 1.45rem;
-  color: #f38e82;
+  color: #16e010;
   text-transform: uppercase;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -442,7 +438,7 @@ body {
 .preview__user-generated svg {
   height: 1.2rem;
   width: 1.2rem;
-  fill: #f38e82;
+  fill: #16e010;
 }
 
 .recipe {
@@ -461,7 +457,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  background-image: linear-gradient(to right bottom, #85FFBD, #FFFB7D);
   opacity: 0.6;
 }
 .recipe__img {
@@ -487,7 +483,7 @@ body {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding: 1.3rem 2rem;
-  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  background-image: linear-gradient(to right bottom, #85FFBD, #FFFB7D);
 }
 @media only screen and (max-width: 61.25em) {
   .recipe__title {
@@ -511,7 +507,7 @@ body {
 .recipe__info-icon {
   height: 2.35rem;
   width: 2.35rem;
-  fill: #f38e82;
+  fill: #16e010;
   margin-right: 1.15rem;
 }
 .recipe__info-data {
@@ -537,7 +533,7 @@ body {
 .recipe__user-generated svg {
   height: 2.25rem;
   width: 2.25rem;
-  fill: #f38e82;
+  fill: #16e010;
 }
 .recipe__ingredients {
   padding: 5rem 8rem;
@@ -560,7 +556,7 @@ body {
 .recipe__icon {
   height: 2rem;
   width: 2rem;
-  fill: #f38e82;
+  fill: #16e010;
   margin-right: 1.1rem;
   flex: 0 0 auto;
   margin-top: 0.1rem;
@@ -683,7 +679,7 @@ body {
 }
 .upload__column input:focus {
   outline: none;
-  border: 1px solid #f38e82;
+  border: 1px solid #16e010;
   background-color: #f9f5f3;
 }
 .upload__column button {
