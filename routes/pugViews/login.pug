@@ -18,11 +18,11 @@ head
         form(method='POST' action='/user/login')
             #form-group
                 label Email:
-                input.form-control(name='username' type='text')
+                input.form-control(name='username' type='text' class="register-input")
             #form-group
                 label Password:
-                input.form-control(name='password' type='password')
+                input.form-control(name='password' type='password' class="register-input")
             br
-            input.btn.btn-primary(type='submit' value='Submit')
+            input.btn.btn-primary(type='submit' value='Submit' class="submit-button")
         br
-        a(href='/user/register') New memeber? Sign up now
+        a(href='/user/register') New memeber? Sign up now!
