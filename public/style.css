@@ -705,9 +705,36 @@ a {
 
 a:link {
   text-decoration: none;
+  color: rgb(56, 204, 43);
+  font-size: 16px;
 }
-
 .alert{
-  color: blue;
   font-size: 20px;
+  margin: 10px;
+  color: white;
+  background-color: #85FFBD;
+  border-radius: 5px;
+  padding: 8px;
+}
+.alert-danger{
+  font-size: 20px;
+  margin: 10px;
+  color: white;
+  background-color: rgb(248, 72, 72);
+  border-radius: 5px;
+  padding: 8px;
+}
+#form-group label{
+  color: rgb(56, 204, 43);
+  font-size: 16px;
+  margin: 10px 0px;
+  display: block;
+}
+.register-input{
+  font-size: 16px;
+  border: 2px solid rgb(104, 195, 255);
+}
+.submit-button{
+  font-size: 12px;
+  color: rgb(104, 195, 255);
 }
