@@ -2,9 +2,9 @@
 
 Team members: Prava Felix-Mihai Opirlesc Andrei-Marius
 
-General description: Ketchapp is a website that contains recipes. (ingredients, cooking time, number of people / servings) For each recipe we can change the number of servings, and the ingredients will be adjusted proportionally. Favorite foods can be added to the favorites list.
+General description: Ketchapp is a website that contains food recipes. (ingredients, cooking time, number of people / servings) For each recipe we can change the number of servings, and the ingredients will be adjusted proportionally. Favorite foods can be added to the favorites list.
 
-You can search the list of recipes without creating an account, but if you choose to create an account, you can propose new recipes that can later be accepted by our chefs (managers), and the recipes will be added to the lists. available to everyone.
+You can search the list of recipes without creating an account, but if you choose to create an account, you can propose new recipes that can later be accepted by our chefs (managers), and the recipes will be added to the lists available to everyone.
 
 The user will have email, password, username, country.
 
